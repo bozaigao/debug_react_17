@@ -305,6 +305,7 @@ export function render(
       );
     }
   }
+
   return legacyRenderSubtreeIntoContainer(
     null,
     element,
