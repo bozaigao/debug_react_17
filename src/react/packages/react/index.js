@@ -1,7 +1,3 @@
-/*
- * @Author: 波仔糕
- * @LastModifiedBy: 波仔糕
- */
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *

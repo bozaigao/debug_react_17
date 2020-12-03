@@ -1,17 +1,10 @@
-import * as React from './react/packages/react';
-import * as ReactDOM from './react/packages/react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+import {React, ReactDOM} from "./CONST";
+import App from "./App";
+import "./index.css";
+import DiffPage from "./pages/DiffPage";
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// ReactDOM.render(<DiffPage city='name'/>, document.getElementById("root"));
+ReactDOM.render(React.createElement(DiffPage,{city:'city'}), document.getElementById("root"));
+
+console.log("version", React.version); //sy-log

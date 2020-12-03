@@ -21,7 +21,7 @@ import {
   REACT_FRAGMENT_TYPE,
   REACT_ELEMENT_TYPE,
 } from 'shared/ReactSymbols';
-import {warnAboutSpreadingKeyToJSX} from 'shared/ReactFeatureFlags';
+import { warnAboutSpreadingKeyToJSX } from 'shared/ReactFeatureFlags';
 import checkPropTypes from 'shared/checkPropTypes';
 
 import ReactCurrentOwner from './ReactCurrentOwner';
@@ -31,8 +31,8 @@ import {
   cloneElement,
   jsxDEV,
 } from './ReactElement';
-import {setExtraStackFrame} from './ReactDebugCurrentFrame';
-import {describeUnknownElementTypeFrameInDEV} from 'shared/ReactComponentStackFrame';
+import { setExtraStackFrame } from './ReactDebugCurrentFrame';
+import { describeUnknownElementTypeFrameInDEV } from 'shared/ReactComponentStackFrame';
 
 function setCurrentlyValidatingElement(element) {
   if (__DEV__) {
@@ -148,7 +148,7 @@ function validateExplicitKey(element, parentType) {
     setCurrentlyValidatingElement(element);
     console.error(
       'Each child in a list should have a unique "key" prop.' +
-        '%s%s See https://reactjs.org/link/warning-keys for more information.',
+      '%s%s See https://reactjs.org/link/warning-keys for more information.',
       currentComponentErrorInfo,
       childOwner,
     );
@@ -244,7 +244,7 @@ function validatePropTypes(element) {
     ) {
       console.error(
         'getDefaultProps is only used on classic React.createClass ' +
-          'definitions. Use a static property named `defaultProps` instead.',
+        'definitions. Use a static property named `defaultProps` instead.',
       );
     }
   }
@@ -263,7 +263,7 @@ function validateFragmentProps(fragment) {
         setCurrentlyValidatingElement(fragment);
         console.error(
           'Invalid prop `%s` supplied to `React.Fragment`. ' +
-            'React.Fragment can only have `key` and `children` props.',
+          'React.Fragment can only have `key` and `children` props.',
           key,
         );
         setCurrentlyValidatingElement(null);
@@ -327,8 +327,8 @@ export function jsxWithValidation(
     if (__DEV__) {
       console.error(
         'React.jsx: type is invalid -- expected a string (for ' +
-          'built-in components) or a class/function (for composite ' +
-          'components) but got: %s.%s',
+        'built-in components) or a class/function (for composite ' +
+        'components) but got: %s.%s',
         typeString,
         info,
       );
@@ -365,8 +365,8 @@ export function jsxWithValidation(
           if (__DEV__) {
             console.error(
               'React.jsx: Static children should always be an array. ' +
-                'You are likely explicitly calling React.jsxs or React.jsxDEV. ' +
-                'Use the Babel transform instead.',
+              'You are likely explicitly calling React.jsxs or React.jsxDEV. ' +
+              'Use the Babel transform instead.',
             );
           }
         }
@@ -381,8 +381,8 @@ export function jsxWithValidation(
       if (hasOwnProperty.call(props, 'key')) {
         console.error(
           'React.jsx: Spreading a key to JSX is a deprecated pattern. ' +
-            'Explicitly pass a key after spreading props in your JSX call. ' +
-            'E.g. <%s {...props} key={key} />',
+          'Explicitly pass a key after spreading props in your JSX call. ' +
+          'E.g. <%s {...props} key={key} />',
           getComponentName(type) || 'ComponentName',
         );
       }
@@ -411,6 +411,8 @@ export function jsxWithValidationDynamic(type, props, key) {
 }
 
 export function createElementWithValidation(type, props, children) {
+
+  console.log('createElementWithValidation');
   const validType = isValidElementType(type);
 
   // We warn in this case but don't throw. We expect the element creation to
@@ -451,8 +453,8 @@ export function createElementWithValidation(type, props, children) {
     if (__DEV__) {
       console.error(
         'React.createElement: type is invalid -- expected a string (for ' +
-          'built-in components) or a class/function (for composite ' +
-          'components) but got: %s.%s',
+        'built-in components) or a class/function (for composite ' +
+        'components) but got: %s.%s',
         typeString,
         info,
       );
@@ -490,6 +492,7 @@ export function createElementWithValidation(type, props, children) {
 let didWarnAboutDeprecatedCreateFactory = false;
 
 export function createFactoryWithValidation(type) {
+  console.log('createFactoryWithValidation');
   const validatedFactory = createElementWithValidation.bind(null, type);
   validatedFactory.type = type;
   if (__DEV__) {
@@ -497,17 +500,17 @@ export function createFactoryWithValidation(type) {
       didWarnAboutDeprecatedCreateFactory = true;
       console.warn(
         'React.createFactory() is deprecated and will be removed in ' +
-          'a future major release. Consider using JSX ' +
-          'or use React.createElement() directly instead.',
+        'a future major release. Consider using JSX ' +
+        'or use React.createElement() directly instead.',
       );
     }
     // Legacy hook: remove it
     Object.defineProperty(validatedFactory, 'type', {
       enumerable: false,
-      get: function() {
+      get: function () {
         console.warn(
           'Factory.type is deprecated. Access the class directly ' +
-            'before passing it to createFactory.',
+          'before passing it to createFactory.',
         );
         Object.defineProperty(this, 'type', {
           value: type,
@@ -521,6 +524,7 @@ export function createFactoryWithValidation(type) {
 }
 
 export function cloneElementWithValidation(element, props, children) {
+  console.log('cloneElementWithValidation');
   const newElement = cloneElement.apply(this, arguments);
   for (let i = 2; i < arguments.length; i++) {
     validateChildKeys(arguments[i], newElement.type);
