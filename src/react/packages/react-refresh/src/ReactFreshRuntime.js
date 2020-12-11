@@ -22,7 +22,7 @@ import type {ReactNodeList} from 'shared/ReactTypes';
 import {REACT_MEMO_TYPE, REACT_FORWARD_REF_TYPE} from 'shared/ReactSymbols';
 
 global.__DEV__ = true;
-global.__PROFILE__ = true;
+global.__PROFILE__ = false;
 global.__EXPERIMENTAL__ = true;
 
 type Signature = {|

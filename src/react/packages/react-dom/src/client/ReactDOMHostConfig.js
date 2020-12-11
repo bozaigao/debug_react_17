@@ -7,16 +7,16 @@
  * @flow
  */
 
-import type {DOMEventName} from '../events/DOMEventNames';
-import type {Fiber, FiberRoot} from 'react-reconciler/src/ReactInternalTypes';
+import type { DOMEventName } from '../events/DOMEventNames';
+import type { Fiber, FiberRoot } from 'react-reconciler/src/ReactInternalTypes';
 import type {
   BoundingRect,
   IntersectionObserverOptions,
   ObserveVisibleRectsCallback,
 } from 'react-reconciler/src/ReactTestSelectors';
-import type {RootType} from './ReactDOMRoot';
-import type {ReactScopeInstance} from 'shared/ReactTypes';
-import type {ReactDOMFundamentalComponentInstance} from '../shared/ReactDOMTypes';
+import type { RootType } from './ReactDOMRoot';
+import type { ReactScopeInstance } from 'shared/ReactTypes';
+import type { ReactDOMFundamentalComponentInstance } from '../shared/ReactDOMTypes';
 
 import {
   precacheFiberNode,
@@ -26,7 +26,7 @@ import {
   getInstanceFromNode as getInstanceFromNodeDOMTree,
   isContainerMarkedAsRoot,
 } from './ReactDOMComponentTree';
-import {hasRole} from './DOMAccessibilityRoles';
+import { hasRole } from './DOMAccessibilityRoles';
 import {
   createElement,
   createTextNode,
@@ -42,14 +42,14 @@ import {
   warnForInsertedHydratedElement,
   warnForInsertedHydratedText,
 } from './ReactDOMComponent';
-import {getSelectionInformation, restoreSelection} from './ReactInputSelection';
+import { getSelectionInformation, restoreSelection } from './ReactInputSelection';
 import setTextContent from './setTextContent';
-import {validateDOMNesting, updatedAncestorInfo} from './validateDOMNesting';
+import { validateDOMNesting, updatedAncestorInfo } from './validateDOMNesting';
 import {
   isEnabled as ReactBrowserEventEmitterIsEnabled,
   setEnabled as ReactBrowserEventEmitterSetEnabled,
 } from '../events/ReactDOMEventListener';
-import {getChildNamespace} from '../shared/DOMNamespaces';
+import { getChildNamespace } from '../shared/DOMNamespaces';
 import {
   ELEMENT_NODE,
   TEXT_NODE,
@@ -59,8 +59,8 @@ import {
 } from '../shared/HTMLNodeType';
 import dangerousStyleValue from '../shared/dangerousStyleValue';
 
-import {REACT_OPAQUE_ID_TYPE} from 'shared/ReactSymbols';
-import {retryIfBlockedOn} from '../events/ReactDOMEventReplaying';
+import { REACT_OPAQUE_ID_TYPE } from 'shared/ReactSymbols';
+import { retryIfBlockedOn } from '../events/ReactDOMEventReplaying';
 
 import {
   enableSuspenseServerRenderer,
@@ -68,8 +68,8 @@ import {
   enableCreateEventHandleAPI,
   enableScopeAPI,
 } from 'shared/ReactFeatureFlags';
-import {HostComponent, HostText} from 'react-reconciler/src/ReactWorkTags';
-import {listenToAllSupportedEvents} from '../events/DOMPluginEventSystem';
+import { HostComponent, HostText } from 'react-reconciler/src/ReactWorkTags';
+import { listenToAllSupportedEvents } from '../events/DOMPluginEventSystem';
 
 export type Type = string;
 export type Props = {
@@ -79,7 +79,7 @@ export type Props = {
   hidden?: boolean,
   suppressHydrationWarning?: boolean,
   dangerouslySetInnerHTML?: mixed,
-  style?: {display?: string, ...},
+  style?: { display?: string, ... },
   bottom?: null | number,
   left?: null | number,
   right?: null | number,
@@ -103,11 +103,11 @@ export type EventTargetChildElement = {
   ...
 };
 export type Container =
-  | (Element & {_reactRootContainer?: RootType, ...})
-  | (Document & {_reactRootContainer?: RootType, ...});
+  | (Element & { _reactRootContainer?: RootType, ... })
+  | (Document & { _reactRootContainer?: RootType, ... });
 export type Instance = Element;
 export type TextInstance = Text;
-export type SuspenseInstance = Comment & {_reactRetry?: () => void, ...};
+export type SuspenseInstance = Comment & { _reactRetry?: () => void, ... };
 export type HydratableInstance = Instance | TextInstance | SuspenseInstance;
 export type PublicInstance = Element | Text;
 type HostContextDev = {
@@ -126,13 +126,13 @@ export type RendererInspectionConfig = $ReadOnly<{||}>;
 export opaque type OpaqueIDType =
   | string
   | {
-      toString: () => string | void,
-      valueOf: () => string | void,
-    };
+    toString: () => string | void,
+    valueOf: () => string | void,
+  };
 
 type SelectionInformation = {|
   focusedElem: null | HTMLElement,
-  selectionRange: mixed,
+    selectionRange: mixed,
 |};
 
 let SUPPRESS_HYDRATION_WARNING;
@@ -191,7 +191,7 @@ export function getRootHostContext(
   if (__DEV__) {
     const validatedTag = type.toLowerCase();
     const ancestorInfo = updatedAncestorInfo(null, validatedTag);
-    return {namespace, ancestorInfo};
+    return { namespace, ancestorInfo };
   }
   return namespace;
 }
@@ -208,7 +208,7 @@ export function getChildHostContext(
       parentHostContextDev.ancestorInfo,
       type,
     );
-    return {namespace, ancestorInfo};
+    return { namespace, ancestorInfo };
   }
   const parentNamespace = ((parentHostContext: any): HostContextProd);
   return getChildNamespace(parentNamespace, type);
@@ -620,8 +620,8 @@ export function unhideInstance(instance: Instance, props: Props): void {
   const styleProp = props[STYLE];
   const display =
     styleProp !== undefined &&
-    styleProp !== null &&
-    styleProp.hasOwnProperty('display')
+      styleProp !== null &&
+      styleProp.hasOwnProperty('display')
       ? styleProp.display
       : null;
   instance.style.display = dangerousStyleValue('display', display);
@@ -977,7 +977,7 @@ export function getFundamentalComponentInstance(
   fundamentalInstance: ReactDOMFundamentalComponentInstance,
 ): Instance {
   if (enableFundamentalAPI) {
-    const {currentFiber, impl, props, state} = fundamentalInstance;
+    const { currentFiber, impl, props, state } = fundamentalInstance;
     const instance = impl.getInstance(null, props, state);
     precacheFiberNode(currentFiber, instance);
     return instance;
@@ -990,7 +990,7 @@ export function mountFundamentalComponent(
   fundamentalInstance: ReactDOMFundamentalComponentInstance,
 ): void {
   if (enableFundamentalAPI) {
-    const {impl, instance, props, state} = fundamentalInstance;
+    const { impl, instance, props, state } = fundamentalInstance;
     const onMount = impl.onMount;
     if (onMount !== undefined) {
       onMount(null, instance, props, state);
@@ -1002,7 +1002,7 @@ export function shouldUpdateFundamentalComponent(
   fundamentalInstance: ReactDOMFundamentalComponentInstance,
 ): boolean {
   if (enableFundamentalAPI) {
-    const {impl, prevProps, props, state} = fundamentalInstance;
+    const { impl, prevProps, props, state } = fundamentalInstance;
     const shouldUpdate = impl.shouldUpdate;
     if (shouldUpdate !== undefined) {
       return shouldUpdate(null, prevProps, props, state);
@@ -1015,7 +1015,7 @@ export function updateFundamentalComponent(
   fundamentalInstance: ReactDOMFundamentalComponentInstance,
 ): void {
   if (enableFundamentalAPI) {
-    const {impl, instance, prevProps, props, state} = fundamentalInstance;
+    const { impl, instance, prevProps, props, state } = fundamentalInstance;
     const onUpdate = impl.onUpdate;
     if (onUpdate !== undefined) {
       onUpdate(null, instance, prevProps, props, state);
@@ -1027,7 +1027,7 @@ export function unmountFundamentalComponent(
   fundamentalInstance: ReactDOMFundamentalComponentInstance,
 ): void {
   if (enableFundamentalAPI) {
-    const {impl, instance, props, state} = fundamentalInstance;
+    const { impl, instance, props, state } = fundamentalInstance;
     const onUnmount = impl.onUnmount;
     if (onUnmount !== undefined) {
       onUnmount(null, instance, props, state);
@@ -1188,8 +1188,8 @@ export function setupIntersectionObserver(
   options?: IntersectionObserverOptions,
 ): {|
   disconnect: () => void,
-  observe: (instance: Instance) => void,
-  unobserve: (instance: Instance) => void,
+    observe: (instance: Instance) => void,
+      unobserve: (instance: Instance) => void,
 |} {
   const rectRatioCache: Map<Instance, RectRatio> = new Map();
   targets.forEach(target => {
@@ -1201,7 +1201,7 @@ export function setupIntersectionObserver(
 
   const handleIntersection = (entries: Array<IntersectionObserverEntry>) => {
     entries.forEach(entry => {
-      const {boundingClientRect, intersectionRatio, target} = entry;
+      const { boundingClientRect, intersectionRatio, target } = entry;
       rectRatioCache.set(target, {
         rect: {
           x: boundingClientRect.left,

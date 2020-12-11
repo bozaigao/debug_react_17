@@ -80,7 +80,7 @@ ReactDOMRoot.prototype.render = ReactDOMBlockingRoot.prototype.render = function
       );
     }
     const container = root.containerInfo;
-
+ 
     if (container.nodeType !== COMMENT_NODE) {
       const hostInstance = findHostInstanceWithNoPortals(root.current);
       if (hostInstance) {

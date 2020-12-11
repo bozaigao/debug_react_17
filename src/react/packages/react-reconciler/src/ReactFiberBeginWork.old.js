@@ -978,6 +978,7 @@ function pushHostRootContext(workInProgress) {
   pushHostContainer(workInProgress, root.containerInfo);
 }
 
+
 function updateHostRoot(current, workInProgress, renderLanes) {
   pushHostRootContext(workInProgress);
   const updateQueue = workInProgress.updateQueue;
@@ -1027,6 +1028,7 @@ function updateHostRoot(current, workInProgress, renderLanes) {
       nextChildren,
       renderLanes,
     );
+
     workInProgress.child = child;
 
     let node = child;
@@ -1263,6 +1265,7 @@ function mountIncompleteClassComponent(
   );
 }
 
+//自定义组件渲染函数
 function mountIndeterminateComponent(
   _current,
   workInProgress,

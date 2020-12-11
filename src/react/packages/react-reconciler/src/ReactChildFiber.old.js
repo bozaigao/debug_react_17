@@ -1133,6 +1133,7 @@ function ChildReconciler(shouldTrackSideEffects) {
               }
               return existing;
             }
+
             break;
           }
         }
@@ -1230,6 +1231,7 @@ function ChildReconciler(shouldTrackSideEffects) {
     if (isObject) {
       switch (newChild.$$typeof) {
         case REACT_ELEMENT_TYPE:
+          //添加子节点
           return placeSingleChild(
             reconcileSingleElement(
               returnFiber,
@@ -1339,6 +1341,7 @@ function ChildReconciler(shouldTrackSideEffects) {
 }
 
 export const reconcileChildFibers = ChildReconciler(true);
+//增加children
 export const mountChildFibers = ChildReconciler(false);
 
 export function cloneChildFibers(

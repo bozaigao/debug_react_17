@@ -347,7 +347,7 @@ export function jsxDEV(type, config, maybeKey, source, self) {
  */
 export function createElement(type, config, children) {
   let propName;
-
+  //将属性和默认属性以及children自组件统一合并到props中并返回一个React对象
   // Reserved names are extracted
   const props = {};
 
