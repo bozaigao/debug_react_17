@@ -17,8 +17,8 @@ function FunctionComponent({name}) {
 
 const jsx = (
   <div className="box border">
-    <p>开课吧</p>
-    <a href="https://kaikeba.com/">开课吧</a>
+    <p>测试</p>
+    <a href="https://kaikeba.com/">测试</a>
     <FunctionComponent name="函数组件" />
     <ClassComponent name="class组件" />
 
